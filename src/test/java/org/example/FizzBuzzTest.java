@@ -7,34 +7,33 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FizzBuzzTest {
-    @Test
-    void shouldReturnNumber1AsAString() {
-        //given
-        FizzBuzz fizzBuzz = new FizzBuzz();
-        // when
-        String result = fizzBuzz.getNumber(1);
-        //then
-        assertEquals("1", result);
-    }
 
-    @Test
-    void shouldReturnNumber2AsString() {
-        FizzBuzz fizzBuzz = new FizzBuzz();
-        //when
-        String result = fizzBuzz.getNumber(2);
+    private final FizzBuzz fizzBuzz = new FizzBuzz();
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 4, 7, 8})
+    void shouldReturnNumberAsAString(int number) {
+        // when
+        String result = fizzBuzz.getNumber(number);
         //then
-        assertEquals("2", result);
+        assertEquals(Integer.toString(number), result);
     }
 
 
     @ParameterizedTest
     @ValueSource(ints = {3, 6, 9, 12, 15})
-    void shouldReturnFizzForOf3(int number) {
-        FizzBuzz fizzBuzz = new FizzBuzz();
+    void shouldReturnFizzForMultiplesOf3(int number) {
         //when
         String result = fizzBuzz.getNumber(number);
         //then
         assertEquals("fizz", result);
     }
-
+    @ParameterizedTest
+    @ValueSource(ints = {5, 10, 20, 25})
+    void shouldReturnBuzzForMultiplesOf5(int number) {
+        //when
+        String result = fizzBuzz.getNumber(number);
+        //then
+        assertEquals("buzz", result);
+    }
 }
