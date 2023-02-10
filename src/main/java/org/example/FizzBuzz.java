@@ -3,6 +3,7 @@ package org.example;
 public class FizzBuzz {
 
     public String getNumber(int number) {
-        return "1";
+        if (number == 3) return "fizz";
+        else return Integer.toString(number);
     }
 }
