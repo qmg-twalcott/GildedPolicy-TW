@@ -2,17 +2,18 @@ package org.example;
 
 public class FizzBuzz {
 
+    public static final String FIZZ = "fizz";
+    public static final String BUZZ = "buzz";
+    public static final String FIZZ_BUZZ = "fizz buzz";
+
     public String getNumber(int number) {
-        if (isaMultipleOf3(number)) return "fizz";
-        if (isaMultipleOf5(number)) return "buzz";
+        if (isaMultipleOf(number, 3) && isaMultipleOf(number, 5)) return FIZZ_BUZZ;
+        if (isaMultipleOf(number, 3)) return FIZZ;
+        if (isaMultipleOf(number, 5)) return BUZZ;
         return Integer.toString(number);
     }
 
-    private static boolean isaMultipleOf5(int number) {
-        return number % 5 == 0;
-    }
-
-    private static boolean isaMultipleOf3(int number) {
-        return number % 3 == 0;
+    private static boolean isaMultipleOf(int number, int modNum) {
+        return number % modNum == 0;
     }
 }

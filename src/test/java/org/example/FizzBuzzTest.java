@@ -1,10 +1,10 @@
 package org.example;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.example.FizzBuzz.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FizzBuzzTest {
 
@@ -21,12 +21,12 @@ class FizzBuzzTest {
 
 
     @ParameterizedTest
-    @ValueSource(ints = {3, 6, 9, 12, 15})
+    @ValueSource(ints = {3, 6, 9, 12})
     void shouldReturnFizzForMultiplesOf3(int number) {
         //when
         String result = fizzBuzz.getNumber(number);
         //then
-        assertEquals("fizz", result);
+        assertEquals(FIZZ, result);
     }
     @ParameterizedTest
     @ValueSource(ints = {5, 10, 20, 25})
@@ -34,6 +34,15 @@ class FizzBuzzTest {
         //when
         String result = fizzBuzz.getNumber(number);
         //then
-        assertEquals("buzz", result);
+        assertEquals(BUZZ, result);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {15, 30, 60})
+    void shouldReturnFizzBuzzForMultipleOf3And5(int number) {
+        //when
+        String result = fizzBuzz.getNumber(number);
+        //then
+        assertEquals(FIZZ_BUZZ, result);
     }
 }
