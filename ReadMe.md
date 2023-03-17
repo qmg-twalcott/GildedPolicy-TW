@@ -12,7 +12,7 @@ First an introduction to our system:
 
 	- All policies have a ExpiryIn value which denotes the number of days we have to sell the policy
 	- All policies have a Percentage value which denotes what percentile of customers view our policy
-	- At the end of each day our system lowers both values for every policy
+	- At the end of each day our system lowers both values for every policy (done)
 
 Pretty simple, right? Well this is where it gets interesting:
 
@@ -21,9 +21,9 @@ Pretty simple, right? Well this is where it gets interesting:
 	- "Silver" actually increases in Percentage the older it gets(done)
 	- The Percentage of a policy is never more than 50(done)
 	- "Gold", being a legendary policy, never has to be sold or decreases in Percentage (done)
-	- "Bronze", like silver, increases in Percentage as its ExpiryIn value approaches;
-	Percentage increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but
-	Percentage drops to 0 after the expiry date
+	- "Bronze", like silver, increases in Percentage as its ExpiryIn value approaches (done);
+	Percentage increases by 2 when there are 10 days or less  (done) and by 3 when there are 5 days or less (done) but
+	Percentage drops to 0 after the expiry date (done)
 
 We have recently signed a supplier of amazon policies. This requires an update to our system:
 

@@ -28,7 +28,7 @@ public class TexttestFixture {
                 System.out.println(item);
             }
             System.out.println();
-            app.updatePercentage();
+            app.update();
         }
     }
 

@@ -14,7 +14,7 @@ class GildedPolicyTest {
         Policy[] policies = new Policy[]{new Policy(policyName, 0, 0)};
         GildedPolicy app = new GildedPolicy(policies);
 
-        app.updatePercentage();
+        app.update();
 
         assertEquals(policyName, app.policies[0].name);
     }
@@ -24,7 +24,7 @@ class GildedPolicyTest {
         Policy[] policies = new Policy[]{new Policy("Policy Name", 0, 0)};
         GildedPolicy app = new GildedPolicy(policies);
 
-        app.updatePercentage();
+        app.update();
 
         assertEquals(app.policies[0].percentage, 0);
     }
@@ -34,7 +34,7 @@ class GildedPolicyTest {
         Policy[] policies = new Policy[]{new Policy("Silver Policy", 0, 50)};
         GildedPolicy app = new GildedPolicy(policies);
 
-        app.updatePercentage();
+        app.update();
 
         assertEquals(app.policies[0].percentage, 50);
     }
@@ -44,7 +44,7 @@ class GildedPolicyTest {
         Policy[] policies = new Policy[]{new Policy("Silver Policy", 0, 45)};
         GildedPolicy app = new GildedPolicy(policies);
 
-        app.updatePercentage();
+        app.update();
 
         assertEquals(app.policies[0].percentage, 47);
     }
@@ -54,7 +54,7 @@ class GildedPolicyTest {
         Policy[] policies = new Policy[]{new Policy("Silver Policy", 5, 45)};
         GildedPolicy app = new GildedPolicy(policies);
 
-        app.updatePercentage();
+        app.update();
 
         assertEquals(app.policies[0].percentage, 46);
     }
@@ -64,7 +64,7 @@ class GildedPolicyTest {
         Policy[] policies = new Policy[]{new Policy("Gold, the very best for the finest people", 5, 45)};
         GildedPolicy app = new GildedPolicy(policies);
 
-        app.updatePercentage();
+        app.update();
 
         assertEquals(app.policies[0].percentage, 45);
         assertEquals(app.policies[0].expiryIn, 5);
@@ -75,7 +75,7 @@ class GildedPolicyTest {
         Policy[] policies = new Policy[]{new Policy("Policy Name", -1, 45)};
         GildedPolicy app = new GildedPolicy(policies);
 
-        app.updatePercentage();
+        app.update();
 
         assertEquals(app.policies[0].percentage, 43);
     }
@@ -85,7 +85,7 @@ class GildedPolicyTest {
         Policy[] policies = new Policy[]{new Policy("Bronze package policy (cheapest policy)", 11, 45)};
         GildedPolicy app = new GildedPolicy(policies);
 
-        app.updatePercentage();
+        app.update();
 
         assertEquals(app.policies[0].percentage, 46);
     }
@@ -96,7 +96,7 @@ class GildedPolicyTest {
         Policy[] policies = new Policy[]{new Policy("Bronze package policy (cheapest policy)", expiryIn, 45)};
         GildedPolicy app = new GildedPolicy(policies);
 
-        app.updatePercentage();
+        app.update();
 
         assertEquals(app.policies[0].percentage, 48);
     }
@@ -107,8 +107,40 @@ class GildedPolicyTest {
         Policy[] policies = new Policy[]{new Policy("Bronze package policy (cheapest policy)", expiryIn, 45)};
         GildedPolicy app = new GildedPolicy(policies);
 
-        app.updatePercentage();
+        app.update();
 
         assertEquals(app.policies[0].percentage, 47);
+    }
+
+    @Test
+    void bronzePercentageDropsToZeroAfterExpiryDateHasPassed() {
+        Policy[] policies = new Policy[]{new Policy("Bronze package policy (cheapest policy)", 0, 45)};
+        GildedPolicy app = new GildedPolicy(policies);
+
+        app.update();
+
+        assertEquals(app.policies[0].percentage, 0);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {5, 4, 3, 2, 1, 0})
+    void expiryDateDecreasesBy1WithEveryUpdate(int expiryIn) {
+        Policy[] policies = new Policy[]{new Policy("Policy Name", expiryIn, 45)};
+        GildedPolicy app = new GildedPolicy(policies);
+
+        app.update();
+
+        assertEquals(app.policies[0].expiryIn, expiryIn-1);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {10, 9, 8, 7, 6})
+    void percentageDropsBy1WithEachUpdate(int percentage) {
+        Policy[] policies = new Policy[]{new Policy("Policy Name", 7, percentage)};
+        GildedPolicy app = new GildedPolicy(policies);
+
+        app.update();
+
+        assertEquals(app.policies[0].percentage, percentage-1);
     }
 }

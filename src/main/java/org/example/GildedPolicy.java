@@ -7,7 +7,7 @@ class GildedPolicy {
         this.policies = policies;
     }
 
-    public void updatePercentage() {
+    public void update() {
         for (int i = 0; i < policies.length; i++) {
             if (!policies[i].name.equals("Silver Policy")
                     && !policies[i].name.equals("Bronze package policy (cheapest policy)")) {
