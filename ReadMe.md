@@ -16,7 +16,7 @@ First an introduction to our system:
 
 Pretty simple, right? Well this is where it gets interesting:
 
-	- Once the expiry date has passed, Percentage degrades twice as fast
+	- Once the expiry date has passed, Percentage degrades twice as fast (done)
 	- The Percentage of a policy is never negative (done)
 	- "Silver" actually increases in Percentage the older it gets(done)
 	- The Percentage of a policy is never more than 50(done)
