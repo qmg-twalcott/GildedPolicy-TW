@@ -1,6 +1,8 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -86,5 +88,27 @@ class GildedPolicyTest {
         app.updatePercentage();
 
         assertEquals(app.policies[0].percentage, 46);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5})
+    void bronzePercentageIncreasesBy3IfExpiryDateIsLessThan5(int expiryIn) {
+        Policy[] policies = new Policy[]{new Policy("Bronze package policy (cheapest policy)", expiryIn, 45)};
+        GildedPolicy app = new GildedPolicy(policies);
+
+        app.updatePercentage();
+
+        assertEquals(app.policies[0].percentage, 48);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {6, 7, 8, 9, 10})
+    void bronzePercentageIncreasesBy32IfExpiryDateIsLessThan10(int expiryIn) {
+        Policy[] policies = new Policy[]{new Policy("Bronze package policy (cheapest policy)", expiryIn, 45)};
+        GildedPolicy app = new GildedPolicy(policies);
+
+        app.updatePercentage();
+
+        assertEquals(app.policies[0].percentage, 47);
     }
 }
