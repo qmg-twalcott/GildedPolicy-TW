@@ -37,4 +37,24 @@ class GildedPolicyTest {
         assertEquals(app.policies[0].percentage, 50);
     }
 
+    @Test
+    void silverPercentageIncreasesTwiceAsFastAfterExpiryDateHasPassed() {
+        Policy[] policies = new Policy[]{new Policy("Silver Policy", 0, 45)};
+        GildedPolicy app = new GildedPolicy(policies);
+
+        app.updatePercentage();
+
+        assertEquals(app.policies[0].percentage, 47);
+    }
+
+    @Test
+    void silverPercentageIncreasesBy1AsItAgesBeforeTheExpiryDate() {
+        Policy[] policies = new Policy[]{new Policy("Silver Policy", 5, 45)};
+        GildedPolicy app = new GildedPolicy(policies);
+
+        app.updatePercentage();
+
+        assertEquals(app.policies[0].percentage, 46);
+    }
+
 }
