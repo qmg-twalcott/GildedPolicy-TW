@@ -17,10 +17,10 @@ First an introduction to our system:
 Pretty simple, right? Well this is where it gets interesting:
 
 	- Once the expiry date has passed, Percentage degrades twice as fast
-	- The Percentage of a policy is never negative
-	- "Silver" actually increases in Percentage the older it gets
-	- The Percentage of a policy is never more than 50
-	- "Gold", being a legendary policy, never has to be sold or decreases in Percentage
+	- The Percentage of a policy is never negative (done)
+	- "Silver" actually increases in Percentage the older it gets(done)
+	- The Percentage of a policy is never more than 50(done)
+	- "Gold", being a legendary policy, never has to be sold or decreases in Percentage (done)
 	- "Bronze", like silver, increases in Percentage as its ExpiryIn value approaches;
 	Percentage increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but
 	Percentage drops to 0 after the expiry date

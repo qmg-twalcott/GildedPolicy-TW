@@ -57,4 +57,14 @@ class GildedPolicyTest {
         assertEquals(app.policies[0].percentage, 46);
     }
 
+    @Test
+    void goldPercentageAndExpiryInShouldNeverDecrease() {
+        Policy[] policies = new Policy[]{new Policy("Gold, the very best for the finest people", 5, 45)};
+        GildedPolicy app = new GildedPolicy(policies);
+
+        app.updatePercentage();
+
+        assertEquals(app.policies[0].percentage, 45);
+        assertEquals(app.policies[0].expiryIn, 5);
+    }
 }
