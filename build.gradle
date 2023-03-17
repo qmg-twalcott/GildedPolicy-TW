@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'com.diffplug.spotless' version '6.17.0'
 }
 
 group 'org.example'
@@ -10,17 +11,29 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.2'
+    testImplementation 'org.hamcrest:hamcrest:2.2'
 }
 
 test {
     useJUnitPlatform()
+    finalizedBy("spotlessJavaApply")
 }
 
 task texttest(type: JavaExec) {
     main = "org.example.TexttestFixture"
     classpath = sourceSets.test.runtimeClasspath
     args "30"
+}
+
+spotless {
+    java {
+        importOrder()
+        removeUnusedImports()
+        cleanthat()
+        googleJavaFormat()
+        formatAnnotations()
+    }
 }
