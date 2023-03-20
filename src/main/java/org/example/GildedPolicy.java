@@ -1,7 +1,7 @@
 package org.example;
 
-class GildedPolicy {
-  Policy[] policies;
+public class GildedPolicy {
+  public Policy[] policies;
 
   public GildedPolicy(Policy[] policies) {
     this.policies = policies;
