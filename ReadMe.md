@@ -51,3 +51,11 @@ For e.g. 10 days:
 ```
 ./gradlew -q text --args 10
 ```
+
+### PiTest Mutation Testing
+
+```
+./gradlew pitest
+```
+
+Report can be found at `build/reports/pitest/index.html`
