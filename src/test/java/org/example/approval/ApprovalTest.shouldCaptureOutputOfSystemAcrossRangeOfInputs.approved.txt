@@ -1,0 +1,1 @@
+[a common policy, 0, 0] => a common policy, -1, 0
