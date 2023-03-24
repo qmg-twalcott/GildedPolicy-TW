@@ -18,19 +18,19 @@ public class GildedPolicy {
           }
         }
       } else {
-        if (policies[i].percentage < 50) {
-          policies[i].percentage = policies[i].percentage + 1;
+        if (percentageLessThan50(i)) {
+          increasePercentageBy1(policies[i]);
 
-          if (policies[i].name.equals(BRONZE.policyName)) {
-            if (policies[i].expiryIn < 11) {
-              if (policies[i].percentage < 50) {
-                policies[i].percentage = policies[i].percentage + 1;
+          if (ifPolicyIsBronze(i)) {
+            if (policyExpiryInLessThan(11, i)) {
+              if (percentageLessThan50(i)) {
+                increasePercentageBy1(policies[i]);
               }
             }
 
-            if (policies[i].expiryIn < 6) {
-              if (policies[i].percentage < 50) {
-                policies[i].percentage = policies[i].percentage + 1;
+            if (policyExpiryInLessThan(6, i)) {
+              if (percentageLessThan50(i)) {
+                increasePercentageBy1(policies[i]);
               }
             }
           }
@@ -41,24 +41,40 @@ public class GildedPolicy {
         policies[i].expiryIn = policies[i].expiryIn - 1;
       }
 
-      if (policies[i].expiryIn < 0) {
+      if (policyExpiryInLessThan(0, i)) {
         if (!policies[i].name.equals(SILVER.policyName)) {
-          if (!policies[i].name.equals(BRONZE.policyName)) {
+          if (!ifPolicyIsBronze(i)) {
             if (percentageIsMoreThanZero(policies[i])) {
               if (policyIsNotGold(policies[i])) {
                 decreasePercentageBy1(policies[i]);
               }
             }
           } else {
-            policies[i].percentage = policies[i].percentage - policies[i].percentage;
+            policies[i].percentage = 0;
           }
         } else {
-          if (policies[i].percentage < 50) {
+          if (percentageLessThan50(i)) {
             policies[i].percentage = policies[i].percentage + 1;
           }
         }
       }
     }
+  }
+
+  private boolean policyExpiryInLessThan(int expiryIn, int i) {
+    return policies[i].expiryIn < expiryIn;
+  }
+
+  private boolean ifPolicyIsBronze(int i) {
+    return policies[i].name.equals(BRONZE.policyName);
+  }
+
+  private boolean percentageLessThan50(int i) {
+    return policies[i].percentage < 50;
+  }
+
+  private void increasePercentageBy1(Policy policy) {
+    policy.percentage = policy.percentage + 1;
   }
 
   private void decreasePercentageBy1(Policy policy) {
