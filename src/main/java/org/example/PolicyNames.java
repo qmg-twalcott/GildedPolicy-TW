@@ -9,7 +9,7 @@ public enum PolicyNames {
 
   public final String policyName;
 
-  private PolicyNames(String policyName) {
+  PolicyNames(String policyName) {
     this.policyName = policyName;
   }
 }

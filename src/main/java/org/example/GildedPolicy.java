@@ -11,11 +11,10 @@ public class GildedPolicy {
 
   public void update() {
     for (int i = 0; i < policies.length; i++) {
-      if (!policies[i].name.equals(SILVER.policyName)
-          && !policies[i].name.equals(BRONZE.policyName)) {
-        if (policies[i].percentage > 0) {
-          if (!policies[i].name.equals(GOLD.policyName)) {
-            policies[i].percentage = policies[i].percentage - 1;
+      if (isNotSilverOrBronze(policies[i])) {
+        if (percentageIsMoreThanZero(policies[i])) {
+          if (policyIsNotGold(policies[i])) {
+            decreasePercentageBy1(policies[i]);
           }
         }
       } else {
@@ -38,16 +37,16 @@ public class GildedPolicy {
         }
       }
 
-      if (!policies[i].name.equals(GOLD.policyName)) {
+      if (policyIsNotGold(policies[i])) {
         policies[i].expiryIn = policies[i].expiryIn - 1;
       }
 
       if (policies[i].expiryIn < 0) {
         if (!policies[i].name.equals(SILVER.policyName)) {
           if (!policies[i].name.equals(BRONZE.policyName)) {
-            if (policies[i].percentage > 0) {
-              if (!policies[i].name.equals(GOLD.policyName)) {
-                policies[i].percentage = policies[i].percentage - 1;
+            if (percentageIsMoreThanZero(policies[i])) {
+              if (policyIsNotGold(policies[i])) {
+                decreasePercentageBy1(policies[i]);
               }
             }
           } else {
@@ -60,5 +59,21 @@ public class GildedPolicy {
         }
       }
     }
+  }
+
+  private void decreasePercentageBy1(Policy policy) {
+    policy.percentage = policy.percentage - 1;
+  }
+
+  private boolean policyIsNotGold(Policy policy) {
+    return !policy.name.equals(GOLD.policyName);
+  }
+
+  private boolean percentageIsMoreThanZero(Policy policy) {
+    return policy.percentage > 0;
+  }
+
+  private boolean isNotSilverOrBronze(Policy policy) {
+    return !policy.name.equals(SILVER.policyName) && !policy.name.equals(BRONZE.policyName);
   }
 }
