@@ -1,5 +1,6 @@
 package org.example;
 
+import static org.example.PolicyNames.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -19,8 +20,7 @@ class GildedPolicyTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5})
     void bronzePercentageIncreasesBy3IfExpiryDateIsLessThan5(int expiryIn) {
-      Policy[] policies =
-          new Policy[] {new Policy("Bronze package policy (cheapest policy)", expiryIn, 45)};
+      Policy[] policies = new Policy[] {new Policy(BRONZE.policyName, expiryIn, 45)};
       GildedPolicy app = new GildedPolicy(policies);
 
       app.update();
@@ -31,8 +31,7 @@ class GildedPolicyTest {
     @ParameterizedTest
     @ValueSource(ints = {6, 7, 8, 9, 10})
     void bronzePercentageIncreasesBy32IfExpiryDateIsLessThan10(int expiryIn) {
-      Policy[] policies =
-          new Policy[] {new Policy("Bronze package policy (cheapest policy)", expiryIn, 45)};
+      Policy[] policies = new Policy[] {new Policy(BRONZE.policyName, expiryIn, 45)};
       GildedPolicy app = new GildedPolicy(policies);
 
       app.update();
@@ -42,8 +41,7 @@ class GildedPolicyTest {
 
     @Test
     void bronzePercentageDropsToZeroAfterExpiryDateHasPassed() {
-      Policy[] policies =
-          new Policy[] {new Policy("Bronze package policy (cheapest policy)", 0, 45)};
+      Policy[] policies = new Policy[] {new Policy(BRONZE.policyName, 0, 45)};
       GildedPolicy app = new GildedPolicy(policies);
 
       app.update();
@@ -53,8 +51,7 @@ class GildedPolicyTest {
 
     @Test
     void bronzePercentageIncreasesBy1IfExpiryDateIsGreaterThan10() {
-      Policy[] policies =
-          new Policy[] {new Policy("Bronze package policy (cheapest policy)", 11, 45)};
+      Policy[] policies = new Policy[] {new Policy(BRONZE.policyName, 11, 45)};
       GildedPolicy app = new GildedPolicy(policies);
 
       app.update();
@@ -68,8 +65,7 @@ class GildedPolicyTest {
     })
     void bronzePercentageShouldNeverBeMoreThan50WhenExpiryIsLessThan11(
         int startPercentage, int expectedPercentage) {
-      Policy[] policies =
-          new Policy[] {new Policy("Bronze package policy (cheapest policy)", 10, startPercentage)};
+      Policy[] policies = new Policy[] {new Policy(BRONZE.policyName, 10, startPercentage)};
       GildedPolicy app = new GildedPolicy(policies);
 
       app.update();
@@ -83,8 +79,7 @@ class GildedPolicyTest {
     })
     void bronzePercentageShouldNeverBeMoreThan50WhenExpiryIsLessThan6(
         int startPercentage, int expectedPercentage) {
-      Policy[] policies =
-          new Policy[] {new Policy("Bronze package policy (cheapest policy)", 5, startPercentage)};
+      Policy[] policies = new Policy[] {new Policy(BRONZE.policyName, 5, startPercentage)};
       GildedPolicy app = new GildedPolicy(policies);
 
       app.update();
@@ -98,7 +93,7 @@ class GildedPolicyTest {
   class SilverPolicyTest {
     @Test
     void silverPercentageIncreasesTwiceAsFastAfterExpiryDateHasPassed() {
-      Policy[] policies = new Policy[] {new Policy("Silver Policy", 0, 45)};
+      Policy[] policies = new Policy[] {new Policy(SILVER.policyName, 0, 45)};
       GildedPolicy app = new GildedPolicy(policies);
 
       app.update();
@@ -108,7 +103,7 @@ class GildedPolicyTest {
 
     @Test
     void silverPercentageIncreasesBy1AsItAgesBeforeTheExpiryDate() {
-      Policy[] policies = new Policy[] {new Policy("Silver Policy", 5, 45)};
+      Policy[] policies = new Policy[] {new Policy(SILVER.policyName, 5, 45)};
       GildedPolicy app = new GildedPolicy(policies);
 
       app.update();
@@ -121,7 +116,7 @@ class GildedPolicyTest {
       "49,50", "50,50",
     })
     void percentageShouldNeverBeMoreThan50(int startPercentage, int expectedPercentage) {
-      Policy[] policies = new Policy[] {new Policy("Silver Policy", 11, startPercentage)};
+      Policy[] policies = new Policy[] {new Policy(SILVER.policyName, 11, startPercentage)};
       GildedPolicy app = new GildedPolicy(policies);
 
       app.update();
@@ -136,8 +131,7 @@ class GildedPolicyTest {
 
     @Test
     void goldPercentageAndExpiryInShouldNeverDecrease() {
-      Policy[] policies =
-          new Policy[] {new Policy("Gold, the very best for the finest people", 5, 45)};
+      Policy[] policies = new Policy[] {new Policy(GOLD.policyName, 5, 45)};
       GildedPolicy app = new GildedPolicy(policies);
 
       app.update();

@@ -1,5 +1,7 @@
 package org.example;
 
+import static org.example.PolicyNames.*;
+
 public class GildedPolicy {
   public Policy[] policies;
 
@@ -9,10 +11,10 @@ public class GildedPolicy {
 
   public void update() {
     for (int i = 0; i < policies.length; i++) {
-      if (!policies[i].name.equals("Silver Policy")
-          && !policies[i].name.equals("Bronze package policy (cheapest policy)")) {
+      if (!policies[i].name.equals(SILVER.policyName)
+          && !policies[i].name.equals(BRONZE.policyName)) {
         if (policies[i].percentage > 0) {
-          if (!policies[i].name.equals("Gold, the very best for the finest people")) {
+          if (!policies[i].name.equals(GOLD.policyName)) {
             policies[i].percentage = policies[i].percentage - 1;
           }
         }
@@ -20,7 +22,7 @@ public class GildedPolicy {
         if (policies[i].percentage < 50) {
           policies[i].percentage = policies[i].percentage + 1;
 
-          if (policies[i].name.equals("Bronze package policy (cheapest policy)")) {
+          if (policies[i].name.equals(BRONZE.policyName)) {
             if (policies[i].expiryIn < 11) {
               if (policies[i].percentage < 50) {
                 policies[i].percentage = policies[i].percentage + 1;
@@ -36,15 +38,15 @@ public class GildedPolicy {
         }
       }
 
-      if (!policies[i].name.equals("Gold, the very best for the finest people")) {
+      if (!policies[i].name.equals(GOLD.policyName)) {
         policies[i].expiryIn = policies[i].expiryIn - 1;
       }
 
       if (policies[i].expiryIn < 0) {
-        if (!policies[i].name.equals("Silver Policy")) {
-          if (!policies[i].name.equals("Bronze package policy (cheapest policy)")) {
+        if (!policies[i].name.equals(SILVER.policyName)) {
+          if (!policies[i].name.equals(BRONZE.policyName)) {
             if (policies[i].percentage > 0) {
-              if (!policies[i].name.equals("Gold, the very best for the finest people")) {
+              if (!policies[i].name.equals(GOLD.policyName)) {
                 policies[i].percentage = policies[i].percentage - 1;
               }
             }
