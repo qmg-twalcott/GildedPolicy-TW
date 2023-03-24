@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 @DisplayName("Capturing Gilded Policy Requirements")
@@ -60,6 +61,36 @@ class GildedPolicyTest {
 
       assertThat(app.policies[0].percentage, equalTo(46));
     }
+
+    @ParameterizedTest
+    @CsvSource({
+      "49,50", "50,50",
+    })
+    void bronzePercentageShouldNeverBeMoreThan50WhenExpiryIsLessThan11(
+        int startPercentage, int expectedPercentage) {
+      Policy[] policies =
+          new Policy[] {new Policy("Bronze package policy (cheapest policy)", 10, startPercentage)};
+      GildedPolicy app = new GildedPolicy(policies);
+
+      app.update();
+
+      assertThat(app.policies[0].percentage, equalTo(expectedPercentage));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+      "49,50", "50,50",
+    })
+    void bronzePercentageShouldNeverBeMoreThan50WhenExpiryIsLessThan6(
+        int startPercentage, int expectedPercentage) {
+      Policy[] policies =
+          new Policy[] {new Policy("Bronze package policy (cheapest policy)", 5, startPercentage)};
+      GildedPolicy app = new GildedPolicy(policies);
+
+      app.update();
+
+      assertThat(app.policies[0].percentage, equalTo(expectedPercentage));
+    }
   }
 
   @Nested
@@ -83,6 +114,19 @@ class GildedPolicyTest {
       app.update();
 
       assertThat(app.policies[0].percentage, equalTo(46));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+      "49,50", "50,50",
+    })
+    void percentageShouldNeverBeMoreThan50(int startPercentage, int expectedPercentage) {
+      Policy[] policies = new Policy[] {new Policy("Silver Policy", 11, startPercentage)};
+      GildedPolicy app = new GildedPolicy(policies);
+
+      app.update();
+
+      assertThat(app.policies[0].percentage, equalTo(expectedPercentage));
     }
   }
 
@@ -125,16 +169,6 @@ class GildedPolicyTest {
       app.update();
 
       assertThat(app.policies[0].percentage, equalTo(0));
-    }
-
-    @Test
-    void percentageShouldNeverBeMoreThan50() {
-      Policy[] policies = new Policy[] {new Policy("Silver Policy", 0, 50)};
-      GildedPolicy app = new GildedPolicy(policies);
-
-      app.update();
-
-      assertThat(app.policies[0].percentage, equalTo(50));
     }
 
     @Test
