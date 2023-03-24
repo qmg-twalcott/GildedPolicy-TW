@@ -14,13 +14,18 @@ class ApprovalTest {
 
     CombinationApprovals.verifyAllCombinations(
         this::callUpdate,
-        new String[] {"a common policy"},
-        range(0, 1).boxed().toArray(Integer[]::new),
-        range(0, 1).boxed().toArray(Integer[]::new));
+        new String[] {
+          "a common policy",
+          "Silver Policy",
+          "Bronze package policy (cheapest policy)",
+          "Gold, the very best for the finest people"
+        },
+        range(-100, 100).boxed().toArray(Integer[]::new),
+        range(-100, 100).boxed().toArray(Integer[]::new));
   }
 
-  private String callUpdate(String name, int sellIn, int quality) {
-    var items = new Policy[] {new Policy(name, sellIn, quality)};
+  private String callUpdate(String name, int expiryIn, int percentage) {
+    var items = new Policy[] {new Policy(name, expiryIn, percentage)};
     var gildedPolicy = new GildedPolicy(items);
 
     gildedPolicy.update();
