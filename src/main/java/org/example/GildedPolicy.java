@@ -10,71 +10,68 @@ public class GildedPolicy {
   }
 
   public void update() {
-    for (int i = 0; i < policies.length; i++) {
-      if (isNotSilverOrBronze(policies[i])) {
-        if (percentageIsMoreThanZero(policies[i])) {
-          if (policyIsNotGold(policies[i])) {
-            decreasePercentageBy1(policies[i]);
+    for (Policy policy : policies) {
+
+      if (!policyIs(SILVER, policy) && !policyIs(BRONZE, policy)) {
+        if (percentageIsMoreThanZero(policy)) {
+          if (!policyIs(GOLD, policy)) {
+            decreasePercentageBy1(policy);
           }
         }
       } else {
-        if (percentageLessThan50(i)) {
-          increasePercentageBy1(policies[i]);
+        if (percentageLessThan50(policy)) {
+          increasePercentageBy1(policy);
 
-          if (ifPolicyIsBronze(i)) {
-            if (policyExpiryInLessThan(11, i)) {
-              if (percentageLessThan50(i)) {
-                increasePercentageBy1(policies[i]);
+          if (policyIs(BRONZE, policy)) {
+            if (policyExpiryInLessThan(11, policy)) {
+              if (percentageLessThan50(policy)) {
+                increasePercentageBy1(policy);
               }
             }
 
-            if (policyExpiryInLessThan(6, i)) {
-              if (percentageLessThan50(i)) {
-                increasePercentageBy1(policies[i]);
+            if (policyExpiryInLessThan(6, policy)) {
+              if (percentageLessThan50(policy)) {
+                increasePercentageBy1(policy);
               }
             }
           }
         }
       }
 
-      if (policyIsNotGold(policies[i])) {
-        policies[i].expiryIn = policies[i].expiryIn - 1;
+      if (!policyIs(GOLD, policy)) {
+        policy.expiryIn = policy.expiryIn - 1;
       }
 
-      if (policyExpiryInLessThan(0, i)) {
-        if (policyIsNotSilver(policies[i])) {
-          if (!ifPolicyIsBronze(i)) {
-            if (percentageIsMoreThanZero(policies[i])) {
-              if (policyIsNotGold(policies[i])) {
-                decreasePercentageBy1(policies[i]);
+      if (policyExpiryInLessThan(0, policy)) {
+        if (!policyIs(SILVER, policy)) {
+          if (!policyIs(BRONZE, policy)) {
+            if (percentageIsMoreThanZero(policy)) {
+              if (!policyIs(GOLD, policy)) {
+                decreasePercentageBy1(policy);
               }
             }
           } else {
-            policies[i].percentage = 0;
+            policy.percentage = 0;
           }
         } else {
-          if (percentageLessThan50(i)) {
-            increasePercentageBy1(policies[i]);
+          if (percentageLessThan50(policy)) {
+            increasePercentageBy1(policy);
           }
         }
       }
     }
   }
 
-  private boolean policyIsNotSilver(Policy policy) {
-    return !policy.name.equals(SILVER.policyName);
+  private boolean policyIs(PolicyNames policyNames, Policy policy) {
+    return policy.name.equals(policyNames.policyName);
   }
 
-  private boolean policyExpiryInLessThan(int expiryIn, int i) {
-    return policies[i].expiryIn < expiryIn;
+  private boolean policyExpiryInLessThan(int expiryIn, Policy policy) {
+    return policy.expiryIn < expiryIn;
   }
 
-  private boolean ifPolicyIsBronze(int i) {
-    return policies[i].name.equals(BRONZE.policyName);
-  }
-
-  private boolean percentageLessThan50(int i) {
-    return policies[i].percentage < 50;
+  private boolean percentageLessThan50(Policy policy) {
+    return policy.percentage < 50;
   }
 
   private void increasePercentageBy1(Policy policy) {
@@ -85,15 +82,7 @@ public class GildedPolicy {
     policy.percentage = policy.percentage - 1;
   }
 
-  private boolean policyIsNotGold(Policy policy) {
-    return !policy.name.equals(GOLD.policyName);
-  }
-
   private boolean percentageIsMoreThanZero(Policy policy) {
     return policy.percentage > 0;
-  }
-
-  private boolean isNotSilverOrBronze(Policy policy) {
-    return policyIsNotSilver(policy) && !policy.name.equals(BRONZE.policyName);
   }
 }
